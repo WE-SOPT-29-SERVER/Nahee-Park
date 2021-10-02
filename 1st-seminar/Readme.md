@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/81923229/135713392-fd0e59f6-ba83-422b-8656-4099ca8c8b90.png)
+
+
 # node js 개념
 
 - JS 실행할 수 있는 런타임 환경
