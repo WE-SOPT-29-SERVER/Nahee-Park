@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+// 기본적으로 콘솔에 찍히는 거,, 포트 번호 이런 거 바꿀 거 아니면 안 건들 거임
+// 그냥 express 쓰면 3000번, firebase 함께 쓰면 5000번대
+
+var app = require("../app");
+var debug = require("debug")("practice:server");
+// http라는 고전적인 모듈을 이용해 서버를 띄움
+var http = require("http");
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+//app이라고 require 한 것의 포트를 이럻게 지정해줌
+var port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
+
+/**
+ * Create HTTP server.
+ */
+
+// http로 서버 만들고
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+// 서버를 미리 지정한 port에서 띄움
+server.listen(port);
+// 미들웨어들
+server.on("error", onError);
+server.on("listening", onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}
