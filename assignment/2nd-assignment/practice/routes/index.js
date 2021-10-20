@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
 });
 
 // 앞서 정의된 라우터들을 경로에 맞게 use해주는 것
-// api/blog 폴더로 연결
-router.use("/api/blog", require("./api/blog"));
+// api 폴더로 연결
+router.use("/api", require("./api"));
 
 module.exports = router;
