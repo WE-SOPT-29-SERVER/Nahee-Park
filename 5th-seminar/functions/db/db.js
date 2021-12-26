@@ -48,6 +48,7 @@ const connect = async (req) => {
           !!req.params && `params ${JSON.stringify(req.params)}`
         }`
       : `request 없음`;
+  console.log("************",pool);
   const callStack = new Error().stack;
   const client = await pool.connect();
   const query = client.query;
